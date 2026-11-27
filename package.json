@@ -1,0 +1,29 @@
+{
+  "name": "ferrum-grid",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.11.0",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --check .",
+    "quality": "node scripts/quality/check.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3",
+    "vitest": "5.1.2",
+    "@vitest/coverage-v8": "5.1.2",
+    "eslint": "9.28.0",
+    "typescript-eslint": "8.34.0",
+    "prettier": "3.5.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "tinypool": ">=2.1.2 <3"
+    }
+  }
+}

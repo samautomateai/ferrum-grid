@@ -1,0 +1,29 @@
+version: '3'
+tasks:
+  install:
+    cmds: [pnpm install --frozen-lockfile]
+  bootstrap:
+    cmds: [pnpm install --no-frozen-lockfile]
+  doctor:
+    cmds: [node --version, pnpm --version, task --version]
+  format:
+    cmds: [pnpm exec prettier --write .]
+  lint:
+    cmds: [pnpm lint, pnpm quality]
+  architecture:
+    cmds:
+      - node scripts/quality/architecture.mjs
+      - pnpm exec tsc -p packages/core/tsconfig.json
+  typecheck:
+    cmds: [pnpm typecheck]
+  test:
+    cmds: [pnpm test]
+  audit:
+    cmds: [pnpm audit --audit-level high]
+  ci:
+    cmds:
+      - task: lint
+      - task: architecture
+      - task: typecheck
+      - task: test
+      - task: audit
