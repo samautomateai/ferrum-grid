@@ -1,0 +1,22 @@
+version: '3'
+tasks:
+  install:
+    cmds: [pnpm install]
+  doctor:
+    cmds: [node --version, pnpm --version, task --version]
+  format:
+    cmds: [pnpm exec prettier --write .]
+  lint:
+    cmds: [pnpm lint, pnpm quality]
+  typecheck:
+    cmds: [pnpm typecheck]
+  test:
+    cmds: [pnpm test]
+  audit:
+    cmds: [pnpm audit --audit-level high]
+  ci:
+    cmds:
+      - task: lint
+      - task: typecheck
+      - task: test
+      - task: audit
