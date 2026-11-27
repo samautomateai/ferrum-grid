@@ -7,9 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
       - run: pnpm install --no-frozen-lockfile
-      - run: pnpm lint && pnpm quality && pnpm typecheck && pnpm test && pnpm audit --audit-level high
+      - run: pnpm lint && pnpm quality
+      - run: node scripts/quality/architecture.mjs
+      - run: pnpm exec tsc -p packages/core/tsconfig.json
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm audit --audit-level high
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bootstrap-lockfile
+          path: pnpm-lock.yaml
+          if-no-files-found: error
